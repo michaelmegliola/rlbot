@@ -33,7 +33,7 @@ class DistanceSensor:
         
 class LidarSensor(DistanceSensor):
     
-    def __init__(self, sweep_count, sweep_degrees):
+    def __init__(self, sweep_count=12, sweep_degrees=30):
         super().__init__(sweep_count, sweep_degrees)
         self.lidar = VL53L1X.VL53L1X(i2c_bus=1, i2c_address=0x29)
         self.lidar.open() # Initialise the i2c bus and configure the sensor
