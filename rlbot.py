@@ -1,3 +1,5 @@
+import math
+
 class RlBot:
     def __init__(self):
         self.obs_count = 12  # equivalent to: 30 degree field of view
@@ -22,10 +24,6 @@ class RlBot:
 
         self.n_heading %= 8
         self.heading = self.n_heading * math.pi/4
-
-    def render(self):
-        turtle.pendown()
-        turtle.goto(self.x,self.y)
 
     # distance to center point x,y of an obstacle
     def distance_to_ob(self, ob):
