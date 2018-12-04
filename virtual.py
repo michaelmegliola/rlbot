@@ -3,11 +3,11 @@ from rlbotenv import *
 from rlbot import *
 from renderer import Renderer
 
-e = RlBotEnv(RlBot(10), Renderer())
+e = RlBotEnv(RlBot(1), Renderer())
 mr = -99999
 q = np.zeros((12,3))
 
-explore = 0.1
+explore = 0.4
 alpha = 0.1
 gamma = 0.9
 
@@ -27,3 +27,4 @@ for n in range(100000):
         q[state][action] = (1-alpha) * q[state][action] + alpha * (reward + gamma * np.max(q[next_state]))
         state = next_state
         e.render()
+    explore *= 0.9

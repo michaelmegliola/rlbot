@@ -11,7 +11,7 @@ class Obstacle:
         while len(obs) < n:
             ob_x = np.random.randint(-max_x,max_x)
             ob_y = np.random.randint(-max_y,max_y)
-            while ((ob_x**2 + ob_y**2)**0.5) < 100:
+            while ((ob_x**2 + ob_y**2)**0.5) < 30:
                 ob_x = np.random.randint(-max_x,max_x)
                 ob_y = np.random.randint(-max_y,max_y)
             obs.append(Obstacle(ob_x,ob_y,radius))
