@@ -1,4 +1,5 @@
 import math
+from obstacle import Obstacle
 
 class RlBot:
     def __init__(self):
