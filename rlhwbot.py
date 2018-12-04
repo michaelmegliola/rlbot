@@ -8,7 +8,7 @@ from distancesensor import *
 
 class RlHwBot():
     def __init__(self):
-        lidar = LidarSensor()
+        self.lidar = LidarSensor()
 
     def move(self, action):
         if action == 0:

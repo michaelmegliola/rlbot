@@ -12,6 +12,7 @@ class RlBot:
         self.y = 0
         self.heading = 0  # points directly to the right -->
         self.n_heading = 0 # eliminates rounding error
+        self.obstacles = Obstacle.make_obstacles(4)
 
     def move(self, action):
         if action == 0:
@@ -60,13 +61,13 @@ class RlBot:
         right = right if right > -math.pi else right+2*math.pi
         return left, right, (ob.x+dx,ob.y+dy), (ob.x-dx,ob.y-dy)
 
-    def get_distance(self, obstacles):
+    def get_distance(self):
         ranges = []
         for n in range(self.obs_count):
             min_range = self.sensor_range
             sensor_bearing = n * self.sensor_fov + self.heading
             sensor_bearing = sensor_bearing if sensor_bearing < math.pi*2 else sensor_bearing-math.pi*2
-            for ob in obstacles:
+            for ob in self.obstacles:
                 left, right, _0, _1 = self.bearings_to_ob(ob, sensor_bearing)
                 left_edge = abs(left) < self.sensor_fov/2
                 right_edge = abs(right) < self.sensor_fov/2

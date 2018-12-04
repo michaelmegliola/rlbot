@@ -3,12 +3,6 @@ import numpy as np
 
 degrees = lambda x: round(x * 360 / (math.pi*2),3)
 
-class Obstacle:
-    def __init__(self,x,y,r):
-        self.x = x
-        self.y = y
-        self.radius = r
-
 class RlBotEnv:
 
     def __init__(self, bot, renderer = None):
@@ -20,13 +14,15 @@ class RlBotEnv:
         self.bot.reset()
         if self.renderer != None:
             self.renderer.render_reset_turtle(self.bot)
-        return self.bot.get_distance(self.obstacles)
+        obs = self.get_distance()
+        self.min_distance = min(obs)            # for use in first call to step()
+        return obs
 
     def step(self, action):
-        distance = min(self.bot.get_distance(self.obstacles))
         self.bot.move(action)
-        obs = self.bot.get_distance(self.obstacles)
-        reward = distance-min(obs)
+        obs = self.bot.get_distance()
+        reward = self.min_distance-min(obs)
+        self.min_distance = min(obs)            # for use in next call to step()
         self.n += 1
         done = min(obs) < 10 #or self.n > 200
         return obs, reward, done
