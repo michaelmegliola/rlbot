@@ -4,7 +4,6 @@ from rlbot import *
 from renderer import Renderer
 
 e = RlBotEnv(RlBot(1), None)
-mr = -99999
 q = np.zeros((12,3))
 
 explore = 0.1
