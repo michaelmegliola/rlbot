@@ -2,10 +2,11 @@ import math
 from obstacle import Obstacle
 
 class RlBot:
-    def __init__(self):
+    def __init__(self, obstacle_count=1):
         self.obs_count = 12  # equivalent to: 30 degree field of view
         self.sensor_fov = math.pi*2.0/self.obs_count
         self.sensor_range = 1000
+        self.obstacle_count = obstacle_count
         self.reset()
 
     def reset(self):
@@ -13,7 +14,7 @@ class RlBot:
         self.y = 0
         self.heading = 0  # points directly to the right -->
         self.n_heading = 0 # eliminates rounding error
-        self.obstacles = Obstacle.make_obstacles(4)
+        self.obstacles = Obstacle.make_obstacles(self.obstacle_count)
 
     def move(self, action):
         if action == 0:

@@ -1,11 +1,13 @@
 import turtle
+import numpy as np
+import math
 
 class Renderer:
 
     def __init__(self):
         turtle.radians()
 
-    def render(self, obstacle):
+    def render_obstacle(self, obstacle):
         turtle.hideturtle()
         turtle.penup()
         turtle.goto(obstacle.x+obstacle.radius,obstacle.y)
@@ -13,13 +15,13 @@ class Renderer:
         turtle.pendown()
         turtle.circle(obstacle.radius)
 
-    def render_backdrop(self, env):
+    def render_backdrop(self, bot):
         turtle.colormode(255)
         turtle.pencolor((np.random.randint(255),np.random.randint(255),np.random.randint(255)))
         turtle.pensize(3+np.random.randint(5))
-        for o in env.obstacles:
-            o.render()
-        self.render_reset_turtle()
+        for o in bot.obstacles:
+            self.render_obstacle(o)
+        self.render_reset_turtle(bot)
 
     def render_raytrace(self, env):
         turtle.hideturtle()

@@ -13,7 +13,7 @@ class RlBotEnv:
         self.n = 0
         self.bot.reset()
         if self.renderer != None:
-            self.renderer.render_reset_turtle(self.bot)
+            self.renderer.render_backdrop(self.bot)
         obs = self.bot.get_distance()
         self.min_distance = min(obs)            # for use in first call to step()
         return obs
