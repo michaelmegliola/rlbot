@@ -16,7 +16,7 @@ class RlBotEnv:
             self.renderer.render_backdrop(self.bot)
         obs = self.bot.get_distance()
         self.min_distance = min(obs)            # for use in first call to step()
-        return obs
+        return np.argmin(obs)
 
     def step(self, action):
 
@@ -29,4 +29,4 @@ class RlBotEnv:
         reward = self.min_distance-min(obs)
         self.min_distance = min(obs)            # for use in next call to step()
         done = min(obs) < 10 #or self.n > 200
-        return obs, reward, done
+        return np.argmin(obs), reward, done

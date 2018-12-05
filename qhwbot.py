@@ -6,20 +6,15 @@ import rcpy.motor as motor
 from stepper import Stepper
 from distancesensor import *
 
-class QHwBot():
+class QHwBot(Qbot):
     def __init__(self, sensor_sectors=4, turn_sectors=4):
-        self.action_space = turn_sectors
-        self.observation_space = sensor_sectors
         self.lidar = LidarSensor(sensor_sectors, 360/sensor_sectors)
         self.sensor_sectors = sensor_sectors
         self.turn_sectors = turn_sectors
 
-    def sample(self):
-        return np.random.randint(3)
-        
     def move(self, action):
-        degree_duration_left = .0045            #length of time for one degree of rotation, tuned for left
-        degree_duration_right = .0046           #length of time for one degree of rotation, tuned for right
+        degree_duration_left = .0045           #length of time for one degree of rotation, tuned for left
+        degree_duration_right = .0046          #length of time for one degree of rotation, tuned for right
         travel_duration = 0.5                  #length of time to travel linearly
         if action == 0:
             motor.motor1.set(1 * 0.35)
