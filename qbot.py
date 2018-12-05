@@ -1,10 +1,12 @@
 import math
 from obstacle import Obstacle
+import numpy as np
 
-class RlBot:
-    def __init__(self, obstacle_count=1):
-        self.obs_count = 12  # equivalent to: 30 degree field of view
-        self.sensor_fov = math.pi*2.0/self.obs_count
+class QBot:
+    def __init__(self, sensor_sectors=12, turn_n=4, obstacle_count=1):
+        self.sensor_sectors = sensor_sectors  # equivalent to: 30 degree field of view
+        self.sensor_fov = math.pi*2.0/self.sensor_sectors
+        self.turn_n = turn_n
         self.sensor_range = 1000
         self.obstacle_count = obstacle_count
         self.reset()
@@ -24,9 +26,11 @@ class RlBot:
             self.n_heading += 1
         elif action == 2:
             self.n_heading -= 1
+        self.n_heading %= self.turn_n
+        self.heading = self.n_heading * (math.pi * 2.0 / self.turn_n)
 
-        self.n_heading %= 8
-        self.heading = self.n_heading * math.pi/4
+    def sample(self):
+        return np.random.randint(3)
 
     # distance to center point x,y of an obstacle
     def distance_to_ob(self, ob):
@@ -56,16 +60,19 @@ class RlBot:
         left = self.bearing(ob.x+dx,ob.y+dy)
         right = self.bearing(ob.x-dx,ob.y-dy)
         left -= correction
+        left = self.coterm(left)
         right -= correction
-        left = left if left < math.pi else left-2*math.pi
-        left = left if left > -math.pi else left+2*math.pi
-        right = right if right < math.pi else right-2*math.pi
-        right = right if right > -math.pi else right+2*math.pi
+        right = self.coterm(right)
         return left, right, (ob.x+dx,ob.y+dy), (ob.x-dx,ob.y-dy)
+
+    def coterm(self, theta):
+        theta = theta if theta < math.pi else theta-2*math.pi
+        theta = theta if theta > -math.pi else theta+2*math.pi
+        return theta
 
     def get_distance(self):
         ranges = []
-        for n in range(self.obs_count):
+        for n in range(self.sensor_sectors):
             min_range = self.sensor_range
             sensor_bearing = n * self.sensor_fov + self.heading
             sensor_bearing = sensor_bearing if sensor_bearing < math.pi*2 else sensor_bearing-math.pi*2

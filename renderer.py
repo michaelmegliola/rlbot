@@ -4,24 +4,31 @@ import math
 
 class Renderer:
 
-    def __init__(self):
+    def __init__(self, n=1):
         turtle.radians()
+        self.n = n
+        self.count = -1
+
+    def reset(self):
+        self.count += 1
 
     def render_obstacle(self, obstacle):
-        turtle.hideturtle()
-        turtle.penup()
-        turtle.goto(obstacle.x+obstacle.radius,obstacle.y)
-        turtle.setheading(math.pi/2)
-        turtle.pendown()
-        turtle.circle(obstacle.radius)
+        if self.count % self.n == 0:
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(obstacle.x+obstacle.radius,obstacle.y)
+            turtle.setheading(math.pi/2)
+            turtle.pendown()
+            turtle.circle(obstacle.radius)
 
     def render_backdrop(self, bot):
-        turtle.colormode(255)
-        turtle.pencolor((np.random.randint(255),np.random.randint(255),np.random.randint(255)))
-        turtle.pensize(3+np.random.randint(5))
-        for o in bot.obstacles:
-            self.render_obstacle(o)
-        self.render_reset_turtle(bot)
+        if self.count % self.n == 0:
+            turtle.colormode(255)
+            turtle.pencolor((np.random.randint(255),np.random.randint(255),np.random.randint(255)))
+            turtle.pensize(3+np.random.randint(5))
+            for o in bot.obstacles:
+                self.render_obstacle(o)
+            self.render_reset_turtle(bot)
 
     def render_raytrace(self, env):
         turtle.hideturtle()
@@ -39,12 +46,14 @@ class Renderer:
         env.render_reset_turtle()
 
     def render_reset_turtle(self, bot):
-        turtle.hideturtle()
-        turtle.penup()
-        turtle.goto(bot.x, bot.y)
-        turtle.setheading(bot.heading)
-        turtle.showturtle()
+        if self.count % self.n == 0:
+            turtle.hideturtle()
+            turtle.penup()
+            turtle.goto(bot.x, bot.y)
+            turtle.setheading(bot.heading)
+            turtle.showturtle()
 
     def render_bot(self, bot):
-        turtle.pendown()
-        turtle.goto(bot.x,bot.y)
+        if self.count % self.n == 0:
+            turtle.pendown()
+            turtle.goto(bot.x,bot.y)
