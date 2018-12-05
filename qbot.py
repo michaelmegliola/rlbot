@@ -3,10 +3,10 @@ from obstacle import Obstacle
 import numpy as np
 
 class QBot:
-    def __init__(self, sensor_sectors=12, turn_n=4, obstacle_count=1):
+    def __init__(self, sensor_sectors=12, turn_sectors=4, obstacle_count=1):
         self.sensor_sectors = sensor_sectors  # equivalent to: 30 degree field of view
         self.sensor_fov = math.pi*2.0/self.sensor_sectors
-        self.turn_n = turn_n
+        self.turn_sectors = turn_sectors
         self.sensor_range = 1000
         self.obstacle_count = obstacle_count
         self.reset()
@@ -26,8 +26,8 @@ class QBot:
             self.n_heading += 1
         elif action == 2:
             self.n_heading -= 1
-        self.n_heading %= self.turn_n
-        self.heading = self.n_heading * (math.pi * 2.0 / self.turn_n)
+        self.n_heading %= self.turn_sectors
+        self.heading = self.n_heading * (math.pi * 2.0 / self.turn_sectors)
 
     def sample(self):
         return np.random.randint(3)

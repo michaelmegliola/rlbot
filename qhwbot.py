@@ -13,9 +13,9 @@ class RlHwBot():
         self.turn_sectors = turn_sectors
         
     def move(self, action):
-        degree_duration_left = .0045             #length of time for one degree of rotation, tuned for left
-        degree_duration_right = .0046             #length of time for one degree of rotation, tuned for right
-        travel_duration = 0.25              #length of time to travel linearly
+        degree_duration_left = .0045            #length of time for one degree of rotation, tuned for left
+        degree_duration_right = .0046           #length of time for one degree of rotation, tuned for right
+        travel_duration = 0.25                  #length of time to travel linearly
         if action == 0:
             motor.motor1.set(-1 * 0.35)
             motor.motor2.set(1 * 0.36)
