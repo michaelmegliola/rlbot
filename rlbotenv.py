@@ -28,5 +28,5 @@ class RlBotEnv:
         obs = self.bot.get_distance()
         reward = self.min_distance-min(obs)
         self.min_distance = min(obs)            # for use in next call to step()
-        done = min(obs) < 10 #or self.n > 200
+        done = min(obs) < self.bot.min_distance()
         return np.argmin(obs), reward, done

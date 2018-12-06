@@ -83,6 +83,9 @@ class QvBot(QBot):
                     min_range = min(min_range, self.distance_to_ob(ob))
             ranges.append(min_range)
         return ranges
+        
+    def min_distance(self):
+        return 10.0
 
     def __str__(self):
       return 'RlBot x={} y={} heading={}'.format(self.x, self.y, self.heading)

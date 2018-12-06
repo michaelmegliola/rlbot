@@ -9,3 +9,4 @@ class QBot:
 
     def sample(self):
         return np.random.randint(self.action_space())
+

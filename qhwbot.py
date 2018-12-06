@@ -1,3 +1,4 @@
+from qbot import QBot
 import math
 import numpy as np
 import rcpy
@@ -6,7 +7,7 @@ import rcpy.motor as motor
 from stepper import Stepper
 from distancesensor import *
 
-class QHwBot(Qbot):
+class QHwBot(QBot):
     def __init__(self, sensor_sectors=4, turn_sectors=4):
         self.lidar = LidarSensor(sensor_sectors, 360/sensor_sectors)
         self.sensor_sectors = sensor_sectors
@@ -36,3 +37,6 @@ class QHwBot(Qbot):
 
     def reset(self):
         pass
+    
+    def min_distance(self):
+        return 100.0            # millimeters
