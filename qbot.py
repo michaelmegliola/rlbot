@@ -2,7 +2,7 @@ import numpy as np
 
 class QBot:
     def action_space(self):
-        return self.turn_sectors
+        return 3                    # forward, turn left, turn right
 
     def observation_space(self):
         return self.sensor_sectors
