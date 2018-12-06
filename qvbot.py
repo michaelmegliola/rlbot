@@ -8,7 +8,7 @@ class QvBot(QBot):
         self.sensor_sectors = sensor_sectors  # equivalent to: 30 degree field of view
         self.sensor_fov = math.pi*2.0/self.sensor_sectors
         self.turn_sectors = turn_sectors
-        self.sensor_range = 1000
+        self.sensor_range = 4000
         self.obstacle_count = obstacle_count
         self.reset()
 
@@ -83,8 +83,8 @@ class QvBot(QBot):
                     min_range = min(min_range, self.distance_to_ob(ob))
             ranges.append(min_range)
         return ranges
-        
-    def min_distance(self):
+
+    def goal(self):
         return 10.0
 
     def __str__(self):

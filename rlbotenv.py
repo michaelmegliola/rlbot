@@ -1,32 +1,33 @@
 import math
 import numpy as np
 
-degrees = lambda x: round(x * 360 / (math.pi*2),3)
+################################################################################
+#                                                                              #
+# Learning environment for Q-Bot:                                              #
+#    - creates discrete observations from continous sensor readings:           #
+#         - sensor = [1000,1200,1110,90,1150,880]                              #
+#         - observation = argmin(senor) = 3 (the index of the lowest reading)  #
+#    - calculates reward based on change in distance to nearest object         #
+#    - relies on robot to provide sensor readings, action space, actions       #
+#                                                                              #
+################################################################################
 
 class RlBotEnv:
 
-    def __init__(self, bot, renderer = None):
-        self.bot = bot
-        self.renderer = renderer
+    def __init__(self, bot):
+        self.bot = bot                  # could be a physical or virtual robot
 
     def reset(self):
         self.bot.reset()
-        if self.renderer != None:
-            self.renderer.reset()
-            self.renderer.render_backdrop(self.bot)
-        obs = self.bot.get_distance()
-        self.min_distance = min(obs)            # for use in first call to step()
-        return np.argmin(obs)
+        obs = self.bot.get_distance()   # returns continous distances
+        self.min_distance = min(obs)    # for use in first call to step()
+        return np.argmin(obs)           # convert to discrete observation
 
     def step(self, action):
-
         self.bot.move(action)
-
-        if self.renderer != None:
-            self.renderer.render_bot(self.bot)
-
-        obs = self.bot.get_distance()
-        reward = self.min_distance-min(obs)
-        self.min_distance = min(obs)            # for use in next call to step()
-        done = min(obs) < self.bot.min_distance()
-        return np.argmin(obs), reward, done
+        obs = self.bot.get_distance()        # get continous distances
+        reward = self.min_distance-min(obs)  # reward = reduction in distance
+        self.min_distance = min(obs)         # for use in next call to step()
+        state = np.argmin(obs)               # convert to discrete state
+        done = min(obs) < self.bot.goal()    # find an object?
+        return state, reward, done

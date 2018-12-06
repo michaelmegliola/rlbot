@@ -37,6 +37,6 @@ class QHwBot(QBot):
 
     def reset(self):
         pass
-    
-    def min_distance(self):
+
+    def goal(self):
         return 100.0            # millimeters

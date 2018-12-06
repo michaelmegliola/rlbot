@@ -3,14 +3,16 @@ import rcpy.clock as clock
 import rcpy.motor as motor
 import time
 
-
+################################################################################
+#                                                                              #
+# Utility class to drive stepper motor using H-bridge on BeagleBone Blue       #
+#                                                                              #
+################################################################################
 class Stepper:
-    #states = [ (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0) ]
-    #states = [ (1, -1), (-1, -1), (-1, 1), (1, 1)]
-    states = [ (0.15, -0.15), (0.0, -0.15), (-0.15, -0.15), (-0.15, 0.15), (-0.15, 0.15), (0.0, 0.15), (0.15, 0.15), (0.15, 0.0) ]
+    states = [(0.15, -0.15),(0.0, -0.15),(-0.15, -0.15),(-0.15, 0.15),(-0.15, 0.15),(0.0, 0.15),(0.15, 0.15),(0.15, 0.0)]
     step_interval = 0.003
     degrees_per_step = 0.9
-    
+
     def __init__(self, stepper_index = 1):
         self.position = 0
         self.n = 0
@@ -33,7 +35,7 @@ class Stepper:
     def move(self, degrees):
         t0 = time.time() + Stepper.step_interval
         steps = int(round(degrees)/Stepper.degrees_per_step) # 0.9 degrees per step
-        
+
         for x in range(abs(steps)):
             while (time.time() < t0):
                 pass
@@ -42,7 +44,5 @@ class Stepper:
             self.n += -1 if degrees > 0 else 1
             self.n %= len(Stepper.states)
             t0 = time.time() + Stepper.step_interval
-        #self.output1.set(0)
-        #self.output2.set(0)
 
         self.position += steps * Stepper.degrees_per_step
