@@ -1,3 +1,4 @@
+import numpy as np
 from rlbotenv import *
 from qhwbot import *
 
@@ -10,7 +11,7 @@ from qhwbot import *
 e = RlBotEnv(QHwBot(3,12))
 
 # create the q-table
-q = np.rand((e.bot.observation_space(),e.bot.action_space()))
+q = np.random.rand(e.bot.observation_space(), e.bot.action_space())
 
 # try changing these hyper-parameters...
 explore = 0.1  # exploration rate (odds of taking a random action)
