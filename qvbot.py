@@ -3,6 +3,12 @@ from obstacle import Obstacle
 import numpy as np
 from qbot import QBot
 
+################################################################################
+#                                                                              #
+# Virtual Robot: warning! uses high-school trigonometry!                       #
+#                                                                              #
+################################################################################
+
 class QvBot(QBot):
     def __init__(self, sensor_sectors=12, turn_sectors=4, obstacle_count=1):
         self.sensor_sectors = sensor_sectors  # equivalent to: 30 degree field of view

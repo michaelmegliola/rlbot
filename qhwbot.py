@@ -7,6 +7,14 @@ import rcpy.motor as motor
 from stepper import Stepper
 from distancesensor import *
 
+################################################################################
+#                                                                              #
+# Hardware Robot based on BeagleBone Blue using rcpy                           #
+#   see: https://beagleboard.org/blue                                          #
+#   see: https://github.com/mcdeoliveira/rcpy                                  #
+#                                                                              #
+################################################################################
+
 class QHwBot(QBot):
     def __init__(self, sensor_sectors=4, turn_sectors=4):
         self.lidar = LidarSensor(sensor_sectors, 360/sensor_sectors)

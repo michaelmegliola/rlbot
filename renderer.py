@@ -2,11 +2,11 @@ import turtle
 import numpy as np
 import math
 
-##################################################################
-#                                                                #
-# Utility class to render robot onscreen using turtle graphics.  #
-#                                                                #
-##################################################################
+#########################################################################
+#                                                                       #
+# Utility class to render robot onscreen using Python turtle graphics.  #
+#                                                                       #
+#########################################################################
 
 class Renderer:
 

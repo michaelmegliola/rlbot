@@ -2,6 +2,13 @@ from stepper import *
 import numpy as np
 import VL53L1X
 
+################################################################################
+#                                                                              #
+# Distance Sensor using SparkFun                                               #
+#   see: https://www.sparkfun.com/products/14722                               #
+#                                                                              #
+################################################################################
+
 class DistanceSensor:
 
     def __init__(self, sweep_count = 3, sweep_degrees = 30):
